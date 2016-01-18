@@ -1,0 +1,15 @@
+{
+  "name": "@f/pending-value",
+  "description": "A thin abstraction over promises that makes them retargetable, so that you can represent a single value that may be asynchronously computed and re-computed.",
+  "repository": "git://github.com/micro-js/pending-value.git",
+  "version": "0.1.0",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "scripts": {
+    "postversion": "git push && git push --tags && npm publish --access=public"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "tape": "^4.2.2"
+  }
+}
