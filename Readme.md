@@ -14,18 +14,42 @@ A thin abstraction over promises that makes them retargetable, so that you can r
 
 ## Usage
 
+You should use `pendingValue` when you have a thing that may be recomputed or rebuilt over time, but you want to abstract that fact away from the code that uses it. For instance, watching a browserify bundle:
+
 ```js
 var pendingValue = require('@f/pending-value')
+var browserify = require('browserify')
+var concat = require('concat-stream')
+var watchify = require('watchify')
+var route = require('koa-route')
+var fs = require('fs')
 
+var js = pendingValue()
+var b = browserify({
+  entries: 'entry.js',
+  cache: {},
+  packageCache: {},
+  plugin: [watchify]
+})
+
+b.on('update', bundle)
+bundle()
+
+function bundle() {
+  js.pending()
+  b.bundle().pipe(concat(str = js.ready(str))
+}
+
+app.use(route.get('/bundle.js', function *() {
+  this.body = yield js.value()
+})
 ```
 
 ## API
 
-### pendingValue(arg)
+### pendingValue()
 
-- `arg` -
-
-**Returns:**
+**Returns:** An object with three methods. `pending()`, `ready(value)`, and `value()`. `pending()` puts the structure back into its loading state, blocking all requests for `value` until `ready` is called with a new value.
 
 ## License
 
